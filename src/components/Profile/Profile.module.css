@@ -1,0 +1,14 @@
+
+.profile {
+    grid-area: c; 
+    background-color: red;
+}
+
+
+.avatar {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+/*background-color: red;*/
+}
+

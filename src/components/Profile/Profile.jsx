@@ -6,22 +6,20 @@ import ProfileInfo from './ProfileInfo/ProfileInfo.jsx';
 
 const Profile = (props) => {
     
-    let postsElements = props.posts.map ( p => <Post message={p.message} likeNum={p.likesCount} /> );
+    let postsElements = props.profilePage.posts.map ( p => <Post message={p.message} likeNum={p.likesCount} /> );
     
     return (
-            <div> 
+            <div className={s.profile}> 
                     <div> 
                         <ProfileInfo />
                     </div>
-                        <MyPosts />
+                        <MyPosts posts={props.profilePage.posts} 
+                        newPostText={props.newPostText} 
+                        dispatch={props.dispatch}/>
                 <div> Posts:
                     {postsElements}
                 </div>
             </div>
-                        
-
-
-                
 
              );
 };
