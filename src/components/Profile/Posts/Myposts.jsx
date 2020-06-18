@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Myposts.module.css';
-
+import Post from "./Post/Post.jsx";
 
 
 
@@ -17,7 +17,7 @@ const MyPosts = (props) => {
         props.updateNewPostText(text);
                 
     };
-     
+     let postsElements = props.posts.map ( p => <Post message={p.message} likeNum={p.likesCount} /> );
      
     return (
              <div className={s.postsBlock}> 
@@ -31,7 +31,9 @@ const MyPosts = (props) => {
                         <div>
                         <button onClick={onAddPost}> Add post </button>
                                 </div>
-                        
+                        <div> Posts:
+                    {postsElements}
+                </div>
                     </div>
            </div>
                 
