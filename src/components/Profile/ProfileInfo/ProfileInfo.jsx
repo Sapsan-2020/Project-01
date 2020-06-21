@@ -1,8 +1,18 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
+import Preloader from '../../common/preloader/preloader.js';
+import userPhoto from './smile.jpg';
 
+let aboutMe='rewt';
 
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
+    if (!props.profile){
+        return <Preloader />
+    }
+    
+   
+   
+    
     return (
             <div> 
                 <div> 
@@ -11,8 +21,11 @@ const ProfileInfo = () => {
                 
             </div> 
                     <div className={s.descriptionBlock}> 
-                        <img id='avatar' src='https://alenkai.ru/d/ai509-269b8236501c44d492b49b57a69cb331-1.jpg' width="150" height="150" alt="" />
-                        avatar + description
+                        <img id='avatar' src={props.profile.photos.large !== null ? props.profile.photos.large : userPhoto} className={s.userPhoto} alt="" />
+                        <div className={s.nameBlock}> Name: {props.profile.fullName}.</div>
+                        <div className={s.nameBlock}> About Me: {props.profile.aboutMe}.</div>               
+
+                        
                     </div>
                 
             </div>
