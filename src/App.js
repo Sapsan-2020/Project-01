@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header/Header.jsx';
+import HeaderContainer from './components/Header/HeaderContainer.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ProfileContainer from './components/Profile/ProfileContainer.jsx';
 import DialogsContainer from './components/Dialogs/DialogsContainer.jsx';
@@ -15,7 +15,7 @@ const App = (props) => {
     return (
             <BrowserRouter>
                 <div className='app-wrapper' >
-                    <Header />            
+                    <HeaderContainer />            
                     <Navbar state={props.state.sideBar}  />
                                           
                     <div className='app-wrapper-content' >  
