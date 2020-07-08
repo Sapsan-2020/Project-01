@@ -18,8 +18,8 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
-                state,
-                ...action.data,
+                        ...state,
+                        ...action.data,
                 isAuth: true
             };
         
@@ -31,7 +31,7 @@ const authReducer = (state = initialState, action) => {
         */
         default:
            
-            return {state};
+            return state;
 
     }
     ;
