@@ -1,40 +1,45 @@
 import React from 'react';
 import Profile from './Profile.jsx';
 import {connect} from 'react-redux';
-import {setUserProfile, updateNewPostTextActionCreator} from '../../redux/profile-reducer.js';
-import * as axios from 'axios';
+import {compose} from 'redux'; 
+import {getUserProfile, getStatus, updateStatus} from '../../redux/profile-reducer.js';
 import {withRouter} from 'react-router-dom';
-
+import {withAuthRedirect} from '../../hoc/withAuthRedirect.js';
 
 
 class ProfileContainer extends React.Component {
     
     componentDidMount () {
         let userId = this.props.match.params.userId;
-        if (!userId) {
-            userId=2
+        if (!userId) { 
+            userId=8917
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)
-                .then(response => {
-                    this.props.setUserProfile(response.data);
-
-                });
+        this.props.getUserProfile(userId);
+        this.props.getStatus(userId)
     }
     
     
     render(){
-    
     return (
-             <Profile {...this.props} profile={this.props.profile}/>
+             <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
             );
 };
 };
-
 let mapStateToProps = (state) => ({
-   profile: state.profilePage.profile 
+   profile: state.profilePage.profile,
+   status: state.profilePage.status
 });
+export default compose (
+    connect (mapStateToProps, {getUserProfile, getStatus, updateStatus}),
+    withRouter,
+    withAuthRedirect)
+    (ProfileContainer);
 
-let WithUrlDataConteinerComponent = withRouter (ProfileContainer);
 
-export default connect (mapStateToProps, {setUserProfile}) (WithUrlDataConteinerComponent);
+
+/* Замещено одной строкой export default compose (.....)
+ * let authRedirectConponent = withAuthRedirect(ProfileContainer)
+let WithUrlDataConteinerComponent = withRouter (authRedirectConponent);
+
+export default connect (mapStateToProps, {getUserProfile}) (WithUrlDataConteinerComponent);*/
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import * as axios from 'axios';
 
 
@@ -10,28 +9,66 @@ const instance = axios.create ({
              }
 });
 
-
-
-export const getUsers = (currentPage = 1, pageSize = 10) => { 
+export const usersAPI = {
+    getUsers(currentPage = 1, pageSize = 10) { 
     // default : currentPage = 1, pageSize = 10
 return instance.get( `users?page=${currentPage}&count=${pageSize}`)
-                                                          .then(response => {
-                                                              return response.data;
-                                                          } );
+        .then(response => {
+        return response.data;
+        });
+},
+    follow(userId) {
+        return instance.post( `follow/${userId}`).then(response => {
+                                         return response.data;
+                                         } ); 
+    },
+
+    unFollow(userId) { 
+    return instance.delete( `follow/${userId}`)
+                                         .then(response => {
+                                         return response.data;
+                                         } );
+    },
+    
+
+    getProfile(userId) {
+    console.warn('Obsolete method. Please use profileAPI object')
+        return profileAPI.getProfile(userId);
+    },
+
 };
 
-export const authMe = () => { 
+
+export const profileAPI = {
+    getProfile(userId) {
+        return instance.get('profile/' + userId);
+    },
+    getStatus(userId) {
+        return instance.get('profile/status/' + userId);
+    },
+    updateStatus(status) {
+        return instance.put('profile/status/', {status: status});
+        
     
-return instance.get( `auth/me`).then(response => {
+    },
+};
+
+
+
+
+export const authAPI = {
+    me () { 
+    return instance.get( `auth/me`)
+       .then(response => {
         return response.data;
         
     }
-                                                          );
+      );
+}
 };
 
 
-
-export const unFollow = (id) => { 
+/*export const unFollow = (id) => { 
 return instance.delete( `follow/${id}`)
                                          .then(response => {
                                          return response.data;
@@ -44,4 +81,4 @@ return instance.post( `follow/${id}`)
                                          .then(response => {
                                          return response.data;
                                          } );
-};
+};*/
